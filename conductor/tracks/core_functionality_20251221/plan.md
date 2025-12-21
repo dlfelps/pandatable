@@ -4,16 +4,16 @@
 - [x] Task: Initialize Vite project with TypeScript and WebExtension plugin [689682e]
 - [x] Task: Create project directory structure and basic manifest.json [2d90262]
 - [x] Task: Set up testing framework (Vitest) and basic health check test [8ec1bed]
-- [~] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding & Build Setup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding & Build Setup' (Protocol in workflow.md) [2f5b993]
 
 ## Phase 2: Table Detection & Extraction (Content Script)
-- [ ] Task: Write Tests for table detection logic
-- [ ] Task: Implement basic `<table>` detection in content script
-- [ ] Task: Write Tests for table data extraction (JSON format)
-- [ ] Task: Implement table extraction with header support
-- [ ] Task: Write Tests for iframe table detection
-- [ ] Task: Implement same-origin iframe support
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Table Detection & Extraction' (Protocol in workflow.md)
+- [x] Task: Write Tests for table detection logic [2f5b993]
+- [x] Task: Implement basic `<table>` detection in content script [2f5b993]
+- [x] Task: Write Tests for table data extraction (JSON format) [2f5b993]
+- [x] Task: Implement table extraction with header support [2f5b993]
+- [x] Task: Write Tests for iframe table detection [2f5b993]
+- [x] Task: Implement same-origin iframe support [2f5b993]
+- [~] Task: Conductor - User Manual Verification 'Phase 2: Table Detection & Extraction' (Protocol in workflow.md)
 
 ## Phase 3: Pyodide Runtime & Background Service Worker
 - [ ] Task: Set up Background Service Worker for message routing
