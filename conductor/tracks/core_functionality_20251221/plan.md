@@ -3,7 +3,7 @@
 ## Phase 1: Project Scaffolding & Build Setup
 - [x] Task: Initialize Vite project with TypeScript and WebExtension plugin [689682e]
 - [x] Task: Create project directory structure and basic manifest.json [2d90262]
-- [ ] Task: Set up testing framework (Vitest) and basic health check test
+- [x] Task: Set up testing framework (Vitest) and basic health check test [8ec1bed]
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding & Build Setup' (Protocol in workflow.md)
 
 ## Phase 2: Table Detection & Extraction (Content Script)
