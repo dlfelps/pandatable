@@ -2,7 +2,7 @@
 
 ## Phase 1: Project Scaffolding & Build Setup
 - [x] Task: Initialize Vite project with TypeScript and WebExtension plugin [689682e]
-- [ ] Task: Create project directory structure and basic manifest.json
+- [x] Task: Create project directory structure and basic manifest.json [2d90262]
 - [ ] Task: Set up testing framework (Vitest) and basic health check test
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding & Build Setup' (Protocol in workflow.md)
 
