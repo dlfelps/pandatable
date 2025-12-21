@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "test": "vitest run",
+      "test:watch": "vitest"
+    },  "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@types/chrome": "^0.1.32",
     "@vitejs/plugin-react": "^5.1.2",
+    "happy-dom": "^20.0.11",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
-    "vite-plugin-web-extension": "^4.5.0"
+    "vite-plugin-web-extension": "^4.5.0",
+    "vitest": "^4.0.16"
   }
 }

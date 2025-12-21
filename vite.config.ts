@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import webExtension from "vite-plugin-web-extension";
 
@@ -11,5 +12,8 @@ export default defineConfig({
     alias: {
       "@": "/src",
     },
+  },
+  test: {
+    environment: "happy-dom",
   },
 });
