@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [ ] Track: Build the core functionality for the Pandas Table Scraper: table detection and extraction, Pyodide integration, and a basic code editor with results display.
+## [~] Track: Build the core functionality for the Pandas Table Scraper: table detection and extraction, Pyodide integration, and a basic code editor with results display.
 *Link: [./conductor/tracks/core_functionality_20251221/](./conductor/tracks/core_functionality_20251221/)*
