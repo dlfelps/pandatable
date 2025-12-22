@@ -13,7 +13,7 @@
 - [x] Task: Implement table extraction with header support [362f3aa]
 - [x] Task: Write Tests for iframe table detection [362f3aa]
 - [x] Task: Implement same-origin iframe support [362f3aa]
-- [~] Task: Conductor - User Manual Verification 'Phase 2: Table Detection & Extraction' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Table Detection & Extraction' (Protocol in workflow.md) [ceed1c9]
 
 ## Phase 3: Pyodide Runtime & Background Service Worker
 - [ ] Task: Set up Background Service Worker for message routing

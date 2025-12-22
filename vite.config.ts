@@ -6,12 +6,11 @@ export default defineConfig({
   plugins: [
     webExtension({
       manifest: "src/manifest.json",
+      additionalInputs: ["src/offscreen/index.html"],
     }),
   ],
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
+  worker: {
+    format: 'es',
   },
   test: {
     environment: "happy-dom",

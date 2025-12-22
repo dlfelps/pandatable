@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pandas Table Scraper</title>
+    <style>
+      body { width: 400px; padding: 10px; font-family: sans-serif; }
+      #results { white-space: pre-wrap; margin-top: 10px; border: 1px solid #ccc; padding: 5px; max-height: 300px; overflow: auto; }
+      button { margin-right: 5px; }
+    </style>
     <script type="module" crossorigin src="/src/popup/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/modulepreload-polyfill.js">
   </head>
   <body>
-    <div id="app"></div>
+    <h3>Pandas Table Scraper</h3>
+    <button id="detect">Detect Tables</button>
+    <button id="run">Run Test Python</button>
+    <div id="results">Click a button to start...</div>
   </body>
 </html>
