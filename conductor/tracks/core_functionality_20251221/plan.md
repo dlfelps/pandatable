@@ -7,12 +7,12 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding & Build Setup' (Protocol in workflow.md) [2f5b993]
 
 ## Phase 2: Table Detection & Extraction (Content Script)
-- [x] Task: Write Tests for table detection logic [2f5b993]
-- [x] Task: Implement basic `<table>` detection in content script [2f5b993]
-- [x] Task: Write Tests for table data extraction (JSON format) [2f5b993]
-- [x] Task: Implement table extraction with header support [2f5b993]
-- [x] Task: Write Tests for iframe table detection [2f5b993]
-- [x] Task: Implement same-origin iframe support [2f5b993]
+- [x] Task: Write Tests for table detection logic [362f3aa]
+- [x] Task: Implement basic `<table>` detection in content script [362f3aa]
+- [x] Task: Write Tests for table data extraction (JSON format) [362f3aa]
+- [x] Task: Implement table extraction with header support [362f3aa]
+- [x] Task: Write Tests for iframe table detection [362f3aa]
+- [x] Task: Implement same-origin iframe support [362f3aa]
 - [~] Task: Conductor - User Manual Verification 'Phase 2: Table Detection & Extraction' (Protocol in workflow.md)
 
 ## Phase 3: Pyodide Runtime & Background Service Worker

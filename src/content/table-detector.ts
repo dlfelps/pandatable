@@ -4,42 +4,54 @@ export interface DetectedTable {
   element: HTMLTableElement;
 }
 
-export function detectTables(doc: Document = document): DetectedTable[] {
-  let detectedTables: DetectedTable[] = [];
+/**
+ * Checks if an element is visible in the DOM.
+ */
+function isVisible(el: HTMLElement): boolean {
+  const style = window.getComputedStyle(el);
+  return (
+    style.display !== 'none' &&
+    style.visibility !== 'hidden' &&
+    el.offsetWidth > 0 &&
+    el.offsetHeight > 0 &&
+    !el.hidden
+  );
+}
 
-  // Detect tables in the current document
-  const tables = Array.from(doc.querySelectorAll('table'));
-  const visibleTables = tables.filter((table) => {
-    // Basic visibility check
-    const style = doc.defaultView?.getComputedStyle(table);
-    if (style) {
-      return style.display !== 'none' && style.visibility !== 'hidden' && !table.hidden;
-    }
-    return !table.hidden;
-  });
+/**
+ * Recursively finds all visible table elements in a document and its same-origin iframes.
+ */
+function findTables(doc: Document): HTMLTableElement[] {
+  let tables: HTMLTableElement[] = Array.from(doc.querySelectorAll('table'));
+  
+  // Filter for visibility
+  tables = tables.filter(isVisible);
 
-  detectedTables = visibleTables.map((table, index) => {
-    const hasHeader = table.querySelectorAll('th').length > 0;
-    return {
-      id: table.id || `table-${index}-${Math.random().toString(36).substr(2, 9)}`,
-      hasHeader,
-      element: table,
-    };
-  });
-
-  // Recursively detect tables in same-origin iframes
+  // Look into iframes
   const iframes = Array.from(doc.querySelectorAll('iframe'));
   for (const iframe of iframes) {
     try {
       const iframeDoc = iframe.contentDocument;
       if (iframeDoc) {
-        detectedTables = detectedTables.concat(detectTables(iframeDoc));
+        tables = tables.concat(findTables(iframeDoc));
       }
     } catch (e) {
-      // Ignore cross-origin iframes (SecurityError)
-      console.warn('Could not access iframe content due to cross-origin restriction');
+      // Ignore cross-origin iframes
     }
   }
+  return tables;
+}
 
-  return detectedTables;
+export function detectTables(): DetectedTable[] {
+  const allTables = findTables(document);
+  
+  return allTables.map((table, index) => {
+    const hasHeader = table.querySelectorAll('th').length > 0;
+    return {
+      // Use the element's actual ID if it exists, otherwise use a stable index-based ID
+      id: table.id || `table-${index}`,
+      hasHeader,
+      element: table,
+    };
+  });
 }
