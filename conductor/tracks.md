@@ -8,4 +8,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 *Link: [./conductor/tracks/core_functionality_20251221/](./conductor/tracks/core_functionality_20251221/)*
 - Phase 1: Project Scaffolding & Build Setup (Completed)
 - Phase 2: Table Detection & Extraction (Completed)
-- Phase 3: Pyodide Runtime & Background Service Worker (Pending)
+- Phase 3: Pyodide Runtime & Background Service Worker (Completed)
+- Phase 4: Popup UI & Code Editor Integration (Completed)
+- Phase 5: Results Display & CSV Export (Completed)

@@ -6,22 +6,28 @@ async function initPyodide(indexURL: string) {
   if (pyodide) return pyodide;
 
   console.log('Worker: Initializing fully local Pyodide...');
-  
-  pyodide = await loadPyodide({
-    indexURL: indexURL
-  });
+  pyodide = await loadPyodide({ indexURL });
 
-  console.log('Worker: Loading local pandas and dependencies...');
-  await pyodide.loadPackage(['pandas', 'micropip']);
+  await pyodide.loadPackage(['pandas', 'micropip', 'matplotlib']);
   
-  // Pre-import pandas and io to save time on subsequent runs
   await pyodide.runPythonAsync(`
     import pandas as pd
     import io
     import json
+    import matplotlib.pyplot as plt
+    import base64
+
+    # Setup matplotlib to use a non-interactive backend
+    import matplotlib
+    matplotlib.use('Agg')
+
+    def get_plot_base64():
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', bbox_inches='tight')
+        plt.close()
+        buf.seek(0)
+        return base64.b64encode(buf.read()).decode('utf-8')
   `);
-  
-  console.log('Worker: Pyodide and pandas ready.');
   
   return pyodide;
 }
@@ -29,38 +35,95 @@ async function initPyodide(indexURL: string) {
 self.onmessage = async (event) => {
   const { type, code, data, indexURL } = event.data;
 
-  if (type === 'INIT') {
-    try {
-      await initPyodide(indexURL);
-      self.postMessage({ type: 'INIT_COMPLETE' });
-    } catch (error: any) {
-      console.error('Worker Init Error:', error);
-      self.postMessage({ type: 'ERROR', error: error.message });
-    }
-  } else if (type === 'RUN_CODE') {
+  if (type === 'RUN_CODE') {
     try {
       const py = await initPyodide(indexURL);
       
-      // Only inject data if it's provided and not empty
       if (data && Array.isArray(data) && data.length > 0) {
         py.globals.set('df_json_str', JSON.stringify(data));
-        await py.runPythonAsync(`
-          # Use StringIO to avoid FutureWarning about literal JSON strings
-          df = pd.read_json(io.StringIO(df_json_str))
-        `);
-        console.log(`Worker: Injected ${data.length} rows into 'df' variable.`);
+        await py.runPythonAsync(`df = pd.read_json(io.StringIO(df_json_str))`);
       }
 
-      console.log('Worker: Executing user code...');
+      // Capture stdout
+      await py.runPythonAsync(`
+        import sys
+        from io import StringIO
+        sys.stdout = StringIO()
+      `);
+
       const result = await py.runPythonAsync(code);
       
-      // Convert result to JS if possible
-      const jsResult = result?.toJs ? result.toJs() : result;
-      console.log('Worker: Execution complete. Result:', jsResult);
+      // Get captured stdout
+      const stdout = (await py.runPythonAsync(`sys.stdout.getvalue()`)) as string;
 
-      self.postMessage({ type: 'RUN_COMPLETE', result: jsResult });
+      // Check for plots
+      let plotBase64 = null;
+      try {
+        const hasPlots = (await py.runPythonAsync(`len(plt.get_fignums()) > 0`)) as boolean;
+        if (hasPlots) {
+          plotBase64 = (await py.runPythonAsync(`get_plot_base64()`)) as string;
+        }
+      } catch (e) { /* ignore plot errors */ }
+
+      // Get HTML representation if it's a DataFrame
+      let htmlResult = null;
+      try {
+        if (result && result.to_html) {
+          htmlResult = result.to_html(classes='table-view');
+        } else {
+          // Fallback check if the global 'df' is a dataframe and was modified
+          const isDF = (await py.runPythonAsync(`isinstance(globals().get('df'), pd.DataFrame)`)) as boolean;
+          if (isDF) {
+             htmlResult = (await py.runPythonAsync(`df.head(20).to_html(classes='table-view')`)) as string;
+          }
+        }
+      } catch (e) { /* ignore */ }
+
+      // Get CSV for export
+      let csvData = null;
+      try {
+        const hasDF = (await py.runPythonAsync(`isinstance(globals().get('df'), pd.DataFrame)`)) as boolean;
+        if (hasDF) {
+          csvData = (await py.runPythonAsync(`df.to_csv(index=False)`)) as string;
+        }
+      } catch (e) { /* ignore */ }
+
+      // Safely convert result to JS
+      let jsResult: any = null;
+      if (result !== undefined && result !== null) {
+        try {
+          if (result.toJs) {
+            jsResult = result.toJs({ dict_converter: Object.fromEntries });
+          } else {
+            jsResult = result;
+          }
+        } catch (e) {
+          jsResult = String(result);
+        }
+      }
+
+      // Final check to ensure nothing is a Proxy
+      const cleanResult = JSON.parse(JSON.stringify(jsResult === undefined ? null : jsResult, (key, value) => {
+        return (typeof value === 'object' && value !== null && value.constructor && value.constructor.name === 'PyProxy') 
+          ? '[PyProxy]' 
+          : value;
+      }));
+
+      self.postMessage({ 
+        type: 'RUN_COMPLETE', 
+        result: cleanResult,
+        stdout,
+        plot: plotBase64,
+        html: htmlResult,
+        csv: csvData
+      });
+
+      // Clean up result proxy if it exists
+      if (result && result.destroy) {
+        result.destroy();
+      }
+
     } catch (error: any) {
-      console.error('Worker Run Error:', error);
       self.postMessage({ type: 'ERROR', error: error.message });
     }
   }

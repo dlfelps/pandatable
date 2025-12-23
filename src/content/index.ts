@@ -14,13 +14,34 @@ export function setupMessageListener() {
         }))
       });
     } else if (request.type === MessageType.EXTRACT_TABLE) {
-      const detected = detectTables();
-      const table = detected.find(t => t.id === request.tableId);
+      const tables = detectTables();
+      const table = tables.find(t => t.id === request.tableId);
       if (table) {
-        const data = extractTableData(table.element);
-        sendResponse({ data });
-      } else {
-        sendResponse({ data: [] });
+        sendResponse({ data: extractTableData(table.element) });
+      }
+    } else if (request.type === 'HIGHLIGHT_TABLE') {
+      const tables = detectTables();
+      const table = tables.find(t => t.id === request.tableId);
+      
+      // Remove existing highlights
+      document.querySelectorAll('.pandas-scraper-highlight').forEach(el => {
+        (el as HTMLElement).style.outline = '';
+        (el as HTMLElement).style.boxShadow = '';
+        el.classList.remove('pandas-scraper-highlight');
+      });
+
+      if (table) {
+        table.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        table.element.style.outline = '5px solid #2196f3';
+        table.element.style.outlineOffset = '2px';
+        table.element.style.boxShadow = '0 0 20px rgba(33, 150, 243, 0.5)';
+        table.element.classList.add('pandas-scraper-highlight');
+        
+        // Auto-remove highlight after 3 seconds
+        setTimeout(() => {
+          table.element.style.outline = '';
+          table.element.style.boxShadow = '';
+        }, 3000);
       }
     }
     return true; // Keep channel open for async response if needed
