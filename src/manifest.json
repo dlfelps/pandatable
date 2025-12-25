@@ -9,8 +9,7 @@
   "permissions": [
     "offscreen",
     "sidePanel",
-    "storage",
-    "webNavigation"
+    "storage"
   ],
   "side_panel": {
     "default_path": "src/popup/index.html"

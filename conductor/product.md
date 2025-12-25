@@ -31,3 +31,4 @@ A powerful browser extension that bridges the gap between web data and Python an
 
 ## Visual Aesthetic & UI
 *   **Professional & Functional:** A clean, data-centric interface prioritized for utility. Features a clear layout with prominent action buttons and a side-by-side arrangement for code entry and result viewing to maximize productivity.
+*   **Side Panel Interface:** Operates as a persistent Chrome Side Panel, maintaining tab-specific state (code and detected tables) to prevent data loss during browser interaction.

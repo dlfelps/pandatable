@@ -38,9 +38,9 @@ chrome.sidePanel
   .catch((error) => console.error(error));
 
 // Clear tables on navigation, but keep code
-chrome.webNavigation.onBeforeNavigate.addListener((details) => {
-  if (details.frameId === 0) { // Main frame only
-    const key = `tab_${details.tabId}`;
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'loading') {
+    const key = `tab_${tabId}`;
     chrome.storage.session.get(key, (result) => {
       if (result[key]) {
         const newState = {

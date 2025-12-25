@@ -13,6 +13,7 @@
 ## Storage & State Management
 *   **Persistent Data:** [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) (via a library like `idb`) for caching Pyodide packages and large DataFrames
 *   **Configuration & History:** [chrome.storage.local](https://developer.chrome.com/docs/extensions/reference/storage/) for user settings, snippets, and execution history
+*   **Session State:** [chrome.storage.session](https://developer.chrome.com/docs/extensions/reference/api/storage#type-SessionStorageArea) for tab-specific code and table persistence
 *   **State Persistence:** IndexedDB-backed recovery system to handle Manifest V3 service worker restarts
 
 ## Extension Architecture
@@ -21,7 +22,7 @@
     *   **Content Scripts:** DOM analysis and table extraction (TypeScript)
     *   **Background Service Worker:** Lifecycle management and message routing (TypeScript)
     *   **Web Worker:** Isolated Pyodide execution environment to prevent UI blocking
-    *   **Popup UI:** Main interface for analysis and visualization (HTML/TypeScript)
+    *   **Side Panel UI:** Persistent interface for analysis and visualization using the [Chrome Side Panel API](https://developer.chrome.com/docs/extensions/reference/api/sidePanel) (HTML/TypeScript)
 
 ## Build & Deployment
 *   **Environment:** Node.js 18+

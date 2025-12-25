@@ -12,8 +12,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 - Phase 4: Popup UI & Code Editor Integration (Completed)
 - Phase 5: Results Display & CSV Export (Completed)
 
----
-
-## [~] Track: Make the extension a side panel instead of a popup.
-*Link: [./conductor/tracks/side_panel_transition_20251225/](./conductor/tracks/side_panel_transition_20251225/)*
-
