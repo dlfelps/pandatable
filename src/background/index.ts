@@ -37,4 +37,21 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
+// Clear tables on navigation, but keep code
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  if (details.frameId === 0) { // Main frame only
+    const key = `tab_${details.tabId}`;
+    chrome.storage.session.get(key, (result) => {
+      if (result[key]) {
+        const newState = {
+          ...result[key],
+          tables: [],
+          selectedTableId: ''
+        };
+        chrome.storage.session.set({ [key]: newState });
+      }
+    });
+  }
+});
+
 console.log('Background Service Worker loaded');

@@ -21,11 +21,11 @@ Move the existing popup logic and UI to the side panel.
 ## Phase 3: Tab-Specific State Management
 Implement persistence for detected tables and code, isolated by browser tab.
 
-- [ ] Task: Design and implement a state storage mechanism in `src/background/index.ts` or via `chrome.storage`.
-- [ ] Task: Update side panel to load state based on the current active tab's ID.
-- [ ] Task: Implement listeners to update the side panel when the user switches tabs or navigates to a new page.
-- [ ] Task: Ensure code persists across navigations but tables are cleared, as per specification.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Tab-Specific State Management' (Protocol in workflow.md)
+- [x] Task: Design and implement a state storage mechanism in `src/background/index.ts` or via `chrome.storage`.
+- [x] Task: Update side panel to load state based on the current active tab's ID.
+- [x] Task: Implement listeners to update the side panel when the user switches tabs or navigates to a new page.
+- [x] Task: Ensure code persists across navigations but tables are cleared, as per specification.
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Tab-Specific State Management' (Protocol in workflow.md)
 
 ## Phase 4: Testing & Quality Assurance
 Verify the transition and ensure no regressions.
