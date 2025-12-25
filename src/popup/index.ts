@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           // Enable CSV export if data exists
           lastCsvData = response.csv;
+          console.log('CSV Data received:', lastCsvData ? lastCsvData.substring(0, 100) + '...' : 'null');
           exportBtn.disabled = !lastCsvData;
           statusText.textContent = 'Done.';
         }
@@ -150,13 +151,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Export CSV
   exportBtn.addEventListener('click', () => {
+    console.log('Export button clicked. lastCsvData length:', lastCsvData?.length);
     if (!lastCsvData) return;
-    const blob = new Blob([lastCsvData], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `table_export_${new Date().getTime()}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+    try {
+      const blob = new Blob([lastCsvData], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `table_export_${new Date().getTime()}.csv`;
+      document.body.appendChild(a); // Append to body to ensure it's in the DOM
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      console.log('Download triggered successfully');
+    } catch (err) {
+      console.error('Export failed:', err);
+      outText.textContent = 'Export Error: ' + err;
+    }
   });
 });

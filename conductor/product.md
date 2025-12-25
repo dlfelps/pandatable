@@ -19,7 +19,7 @@ A powerful browser extension that bridges the gap between web data and Python an
 *   **Immediate Insight:** Support essential data operations (filtering, grouping, describing) and basic visualizations (plots) to provide instant value.
 
 ## Essential Features (MVP)
-*   **Table Detection & Extraction:** Intelligent DOM scanning to identify tables, handle headers, and extract structured data.
+*   **Table Detection & Extraction:** Intelligent DOM scanning to identify tables, handle headers, and extract structured data with automatic numeric type inference (currency, percentages, formatted numbers).
 *   **Interactive Code Editor:** A specialized editor with syntax highlighting for writing and running Python/pandas code.
 *   **Pyodide Runtime Integration:** Lifecycle management for the Python runtime, including optimized loading and package handling.
 *   **Result Visualization:** Multiple output formats including styled HTML tables, formatted text, and matplotlib plots.

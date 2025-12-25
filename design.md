@@ -387,9 +387,8 @@ offerSamplingOption(); // df.sample(n=5000)
 
 ### Permissions
 
-- `activeTab`: Only access current tab when user clicks
-- `storage`: For caching Pyodide and user preferences
-- `scripting`: For content script injection
+- `offscreen`: For running Pyodide in a separate context
+- `host_permissions`: `<all_urls>` for content script injection
 - No unnecessary permissions
 
 ## Performance Optimization

@@ -4,6 +4,11 @@ import { detectTables } from './table-detector';
 describe('Table Detector', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
+    // Mock offsetWidth/Height as happy-dom returns 0 by default
+    Object.defineProperties(window.HTMLElement.prototype, {
+      offsetWidth: { get: () => 100 },
+      offsetHeight: { get: () => 100 },
+    });
   });
 
   it('should detect all <table> elements on the page', () => {

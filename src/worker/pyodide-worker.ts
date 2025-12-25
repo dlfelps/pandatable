@@ -12,6 +12,7 @@ async function initPyodide(indexURL: string) {
   
   await pyodide.runPythonAsync(`
     import pandas as pd
+    import numpy as np
     import io
     import json
     import matplotlib.pyplot as plt
@@ -27,6 +28,60 @@ async function initPyodide(indexURL: string) {
         plt.close()
         buf.seek(0)
         return base64.b64encode(buf.read()).decode('utf-8')
+
+    import re
+
+    def clean_numeric_string(val):
+        if pd.isna(val) or val == "":
+            return np.nan
+        if isinstance(val, (int, float)):
+            return float(val)
+        s = str(val).strip()
+        s = re.sub(r'\[.*?\]', '', s)
+        s = s.replace('−', '-').replace('↑', '').replace('↓', '')
+        is_percent = False
+        if '%' in s:
+            is_percent = True
+            s = s.replace('%', '')
+        s = re.sub(r'[£$€,]', '', s)
+        s = s.strip()
+        try:
+            num = float(s)
+            if is_percent:
+                return num / 100.0
+            return num
+        except ValueError:
+            match = re.search(r'-?\d+\.?\d*', s)
+            if match:
+                try:
+                    num = float(match.group())
+                    if is_percent:
+                        return num / 100.0
+                    return num
+                except ValueError:
+                    return np.nan
+            return np.nan
+
+    def infer_and_convert_column(series):
+        if pd.api.types.is_numeric_dtype(series):
+            return series
+        cleaned = series.map(clean_numeric_string)
+        non_null_count = series.notna().sum()
+        if non_null_count == 0:
+            return series 
+        converted_count = cleaned.notna().sum()
+        success_rate = converted_count / non_null_count
+        if success_rate > 0.5:
+            return cleaned
+        else:
+            return series
+
+    def auto_convert_dataframe(df):
+        new_df = df.copy()
+        for col in new_df.columns:
+            if new_df[col].dtype == 'object':
+                new_df[col] = infer_and_convert_column(new_df[col])
+        return new_df
   `);
   
   return pyodide;
@@ -41,7 +96,10 @@ self.onmessage = async (event) => {
       
       if (data && Array.isArray(data) && data.length > 0) {
         py.globals.set('df_json_str', JSON.stringify(data));
-        await py.runPythonAsync(`df = pd.read_json(io.StringIO(df_json_str))`);
+        await py.runPythonAsync(`
+          df = pd.read_json(io.StringIO(df_json_str))
+          df = auto_convert_dataframe(df)
+        `);
       }
 
       // Capture stdout

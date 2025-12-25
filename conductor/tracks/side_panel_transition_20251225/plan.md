@@ -7,7 +7,7 @@ Configure the extension to support the side panel and remove the popup trigger.
 
 - [x] Task: Update `src/manifest.json` to include `sidePanel` permission and set `default_path`. (6e9414c)
 - [x] Task: Remove `default_popup` from `action` in `manifest.json`. (852d270)
-- [ ] Task: Update `vite.config.ts` to ensure the side panel HTML is bundled correctly (if not already handled).
+- [x] Task: Update `vite.config.ts` to ensure the side panel HTML is bundled correctly (handled automatically by plugin). (6e47f51)
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Manifest & Basic Setup' (Protocol in workflow.md)
 
 ## Phase 2: Side Panel UI Migration

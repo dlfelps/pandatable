@@ -16,6 +16,11 @@ describe('Content Script Entry', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     setupMessageListener();
+    // Mock offsetWidth/Height as happy-dom returns 0 by default
+    Object.defineProperties(window.HTMLElement.prototype, {
+      offsetWidth: { get: () => 100 },
+      offsetHeight: { get: () => 100 },
+    });
   });
 
   it('should register a message listener', () => {

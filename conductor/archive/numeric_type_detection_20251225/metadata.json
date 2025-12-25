@@ -1,0 +1,8 @@
+{
+  "track_id": "numeric_type_detection_20251225",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2025-12-25T08:42:00Z",
+  "updated_at": "2025-12-25T08:42:00Z",
+  "description": "Improve automatic detection of types in the creation of the pandas tables, especially for numeric values like currency and percentages."
+}
