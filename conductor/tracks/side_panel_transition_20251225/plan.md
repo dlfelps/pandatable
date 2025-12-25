@@ -6,7 +6,7 @@ Transform the "Pandas Table Scraper" from a popup-based extension to a side pane
 Configure the extension to support the side panel and remove the popup trigger.
 
 - [x] Task: Update `src/manifest.json` to include `sidePanel` permission and set `default_path`. (6e9414c)
-- [ ] Task: Remove `default_popup` from `action` in `manifest.json`.
+- [x] Task: Remove `default_popup` from `action` in `manifest.json`. (852d270)
 - [ ] Task: Update `vite.config.ts` to ensure the side panel HTML is bundled correctly (if not already handled).
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Manifest & Basic Setup' (Protocol in workflow.md)
 
