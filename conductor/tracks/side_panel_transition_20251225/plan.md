@@ -18,14 +18,14 @@ Move the existing popup logic and UI to the side panel.
 - [x] Task: Implement the extension icon click handler in `src/background/index.ts` to open the side panel. (5734dc7)
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Side Panel UI Migration' (Protocol in workflow.md)
 
-## Phase 3: Tab-Specific State Management
+## Phase 3: Tab-Specific State Management [checkpoint: 6ea6c5a]
 Implement persistence for detected tables and code, isolated by browser tab.
 
 - [x] Task: Design and implement a state storage mechanism in `src/background/index.ts` or via `chrome.storage`.
 - [x] Task: Update side panel to load state based on the current active tab's ID.
 - [x] Task: Implement listeners to update the side panel when the user switches tabs or navigates to a new page.
 - [x] Task: Ensure code persists across navigations but tables are cleared, as per specification.
-- [~] Task: Conductor - User Manual Verification 'Phase 3: Tab-Specific State Management' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Tab-Specific State Management' (Protocol in workflow.md)
 
 ## Phase 4: Testing & Quality Assurance
 Verify the transition and ensure no regressions.
