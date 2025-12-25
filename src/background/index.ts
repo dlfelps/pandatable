@@ -32,4 +32,9 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   }
 });
 
+// Open side panel on action click
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
+
 console.log('Background Service Worker loaded');
