@@ -10,13 +10,13 @@ Configure the extension to support the side panel and remove the popup trigger.
 - [x] Task: Update `vite.config.ts` to ensure the side panel HTML is bundled correctly (handled automatically by plugin). (6e47f51)
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Manifest & Basic Setup' (Protocol in workflow.md)
 
-## Phase 2: Side Panel UI Migration
+## Phase 2: Side Panel UI Migration [checkpoint: 2e78d59]
 Move the existing popup logic and UI to the side panel.
 
-- [x] Task: Verify `src/popup/index.html` and `src/popup/index.ts` work correctly when loaded as a side panel.
+- [x] Task: Verify `src/popup/index.html` and `src/popup/index.ts` work correctly when loaded as a side panel. (1ee16bf)
 - [x] Task: Adjust CSS/Layout in `src/popup/index.html` (or a new `src/sidepanel/index.html`) for the side panel's vertical format. (2af8b33)
 - [x] Task: Implement the extension icon click handler in `src/background/index.ts` to open the side panel. (5734dc7)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Side Panel UI Migration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Side Panel UI Migration' (Protocol in workflow.md)
 
 ## Phase 3: Tab-Specific State Management
 Implement persistence for detected tables and code, isolated by browser tab.
