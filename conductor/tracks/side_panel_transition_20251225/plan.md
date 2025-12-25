@@ -15,7 +15,7 @@ Move the existing popup logic and UI to the side panel.
 
 - [x] Task: Verify `src/popup/index.html` and `src/popup/index.ts` work correctly when loaded as a side panel.
 - [x] Task: Adjust CSS/Layout in `src/popup/index.html` (or a new `src/sidepanel/index.html`) for the side panel's vertical format. (2af8b33)
-- [~] Task: Implement the extension icon click handler in `src/background/index.ts` to open the side panel.
+- [x] Task: Implement the extension icon click handler in `src/background/index.ts` to open the side panel. (5734dc7)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Side Panel UI Migration' (Protocol in workflow.md)
 
 ## Phase 3: Tab-Specific State Management
